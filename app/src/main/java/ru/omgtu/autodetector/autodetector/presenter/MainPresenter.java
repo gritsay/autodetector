@@ -1,5 +1,6 @@
 package ru.omgtu.autodetector.autodetector.presenter;
 
+import android.graphics.BitmapFactory;
 import android.telecom.Call;
 import android.util.Log;
 
@@ -16,24 +17,35 @@ import ru.omgtu.autodetector.autodetector.view.MainView;
  */
 
 public class MainPresenter {
-    MainView mainView;
+    private MainView mainView;
+    private GibddService gibddService;
+
+    public MainPresenter(MainView mainView, GibddService gibddService){
+        this.mainView = mainView;
+        this.gibddService = gibddService;
+    }
 
 
-  public   void checkCapture(String url) {
-      NetworkGibddBuilder.init("http://check.gibdd.ru");
-      NetworkGibddBuilder.init("http://check.gibdd.ru/");
-      GibddService service = NetworkGibddBuilder.getGibddService();
-      service.getCapture().enqueue(new Callback<Capture>() {
+  public void checkCapture(/*String url*/) {
+      gibddService.getCapture().enqueue(new Callback<ResponseBody>() {
           @Override
-          public void onResponse(retrofit2.Call<Capture> call, Response<Capture> response) {
-              Log.d("!!!!", response.toString());
-             //поменять на какртинку на приянтую через запрос
-              mainView.returnCapture(new Capture());
+          public void onResponse(retrofit2.Call<ResponseBody> call, Response<ResponseBody> response) {
+              Log.d("!!!", response.toString());
+              Log.d("!!!!", response.headers().get("Set-Cookie"));
+
+              Capture capture = new Capture();
+              capture.setCookies(response.headers().get("Set-Cookie"));
+              if (response.body() != null){
+                  capture.setCaptcha(BitmapFactory.decodeStream(response.body().byteStream()));
+              }
+              //поменять на какртинку на приянтую через запрос
+              mainView.returnCapture(capture);
+
 
           }
 
           @Override
-          public void onFailure(retrofit2.Call<Capture> call, Throwable t) {
+          public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
               Log.d("!!!!", t.toString());
           }
       });
