@@ -32,10 +32,11 @@ public class DtpPresenter {
         gibddService.getDtp(cookies, requestFields).enqueue(new Callback<CarDtp>() {
             @Override
             public void onResponse(Call<CarDtp> call, Response<CarDtp> response) {
-                Log.d("!!!!", response.toString());
-                Log.d("!!!!", Integer.toString(response.body().getRequestResult().getAccidents().size()));
-                dtpView.returnDtp(response.body());
-
+                if (response.body().getStatus() != 200){
+                    Log.d("!!!!", response.body().getMessage());
+                    dtpView.returnDtpError(response.body().getMessage());
+                }
+                else dtpView.returnDtp(response.body());
             }
 
             @Override

@@ -22,7 +22,8 @@
         <activity android:name=".ui.DtpActivity" />
         <activity android:name=".ui.WantedActivity" />
         <activity android:name=".ui.RestrictActivity" />
-        <activity android:name=".ui.DamageMapActivity"></activity>
+        <activity android:name=".ui.DamageMapActivity" />
+        <activity android:name=".ui.CaptchaActivity"></activity>
     </application>
 
 </manifest>

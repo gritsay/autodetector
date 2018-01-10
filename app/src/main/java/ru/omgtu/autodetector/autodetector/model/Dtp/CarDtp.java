@@ -16,6 +16,11 @@ public class CarDtp {
     @Expose
     private Integer status;
 
+
+    @SerializedName("message")
+    @Expose
+    private String message;
+
     public RequestResult getRequestResult() {
         return requestResult;
     }
@@ -39,5 +44,15 @@ public class CarDtp {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 
 }

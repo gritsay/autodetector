@@ -8,4 +8,5 @@ import ru.omgtu.autodetector.autodetector.model.Restrict.CarRestricted;
 
 public interface RestrictView {
     void returnRestrict(CarRestricted carRestricted);
+    void returnRestrictError(String error);
 }

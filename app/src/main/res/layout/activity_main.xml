@@ -6,37 +6,27 @@
     android:layout_height="match_parent"
     tools:context="ru.omgtu.autodetector.autodetector.ui.MainActivity">
 
-    <ImageView
-        android:id="@+id/ivCaptcha"
-        android:layout_width="327dp"
-        android:layout_height="84dp"
+    <EditText
+        android:id="@+id/etVin"
+        android:layout_width="267dp"
+        android:layout_height="43dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/background_light" />
-
-    <EditText
-        android:id="@+id/etCaptcha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="152dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="376dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="KMHHM61DP2U077462"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivCaptcha" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btn"
+        android:id="@+id/btnCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="224dp"
-        android:layout_marginTop="92dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCaptcha" />
-
+        android:layout_marginTop="16dp"
+        android:text="Check"
+        app:layout_constraintEnd_toEndOf="@+id/etVin"
+        app:layout_constraintTop_toBottomOf="@+id/etVin" />
 </android.support.constraint.ConstraintLayout>

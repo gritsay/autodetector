@@ -8,4 +8,5 @@ import ru.omgtu.autodetector.autodetector.model.History.CarHistory;
 
 public interface HistoryView {
     void returnHistory(CarHistory carHistory);
+    void returnHistoryError(String error);
 }

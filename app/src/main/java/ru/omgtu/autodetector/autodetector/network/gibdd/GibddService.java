@@ -1,8 +1,5 @@
 package ru.omgtu.autodetector.autodetector.network.gibdd;
 
-import android.util.Log;
-
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -13,7 +10,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import ru.omgtu.autodetector.autodetector.model.Capture;
 import ru.omgtu.autodetector.autodetector.model.Dtp.CarDtp;
 import ru.omgtu.autodetector.autodetector.model.History.CarHistory;
 import ru.omgtu.autodetector.autodetector.model.Restrict.CarRestricted;

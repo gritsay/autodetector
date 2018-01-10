@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,11 +26,12 @@ public class DtpActivity extends AppCompatActivity implements DtpView{
 
         Intent intent;
         intent = getIntent();
+        String vin = intent.getStringExtra("vin");
         String cookies = intent.getStringExtra("cookies");
         String captcha = intent.getStringExtra("captcha");
 
         Map queryFields = new HashMap<String, String>();
-        queryFields.put("vin", "KMHHM61DP2U077462");
+        queryFields.put("vin", vin);
         queryFields.put("captchaWord", captcha);
         queryFields.put("checkType", "aiusdtp");
 
@@ -42,11 +44,22 @@ public class DtpActivity extends AppCompatActivity implements DtpView{
 
     @Override
     public void returnDtp(CarDtp carDtp) {
-        List<String> damagePoint = carDtp.getRequestResult().getAccidents().get(0).getDamagePoints();
+        /*List<String> damagePoint = carDtp.getRequestResult().getAccidents().get(0).getDamagePoints();
         String point = TextUtils.join("", damagePoint);
 
         Intent intent = new Intent(this, DamageMapActivity.class);
         intent.putExtra("damagePoint", point);
-        startActivity(intent);
+        startActivityForResult(intent, 1);*/
+
+        setResult(RESULT_OK);
+        finish();
+
+    }
+
+    @Override
+    public void returnDtpError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }

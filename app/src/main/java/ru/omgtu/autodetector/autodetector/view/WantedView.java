@@ -8,4 +8,5 @@ import ru.omgtu.autodetector.autodetector.model.Wanted.CarWanted;
 
 public interface WantedView {
     void returnWanted(CarWanted carWanted);
+    void returnWantedError(String error);
 }

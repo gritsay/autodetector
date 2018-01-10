@@ -37,6 +37,10 @@ public class DamageMapActivity extends AppCompatActivity implements DamageMapVie
 
     @Override
     public void returnDamageMap(DamageMap damageMap) {
-        ivDamageMap.setImageBitmap(damageMap.getDamageMap());
+        //ivDamageMap.setImageBitmap(damageMap.getDamageMap());
+        /*Intent intent = new Intent();
+        intent.putExtra("damageMap", damageMap.getDamageMap());
+        setResult(RESULT_OK, intent);
+        finish();*/
     }
 }

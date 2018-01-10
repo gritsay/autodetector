@@ -8,4 +8,5 @@ import ru.omgtu.autodetector.autodetector.model.Dtp.CarDtp;
 
 public interface DtpView {
     void returnDtp(CarDtp carDtp);
+    void returnDtpError(String error);
 }

@@ -10,7 +10,6 @@ import retrofit2.Response;
 import ru.omgtu.autodetector.autodetector.model.History.CarHistory;
 import ru.omgtu.autodetector.autodetector.network.gibdd.GibddService;
 import ru.omgtu.autodetector.autodetector.view.HistoryView;
-import ru.omgtu.autodetector.autodetector.view.MainView;
 
 /**
  * Created by denis on 23.12.17.
@@ -33,8 +32,11 @@ public class HistoryPresenter {
         gibddService.getHistory(cookies, requestFields).enqueue(new Callback<CarHistory>() {
             @Override
             public void onResponse(Call<CarHistory> call, Response<CarHistory> response) {
-                Log.d("!!!!", response.toString());
-                Log.d("!!!!", response.body().getVin());
+                if (response.body().getStatus() != 200){
+                    Log.d("!!!!", response.body().getMessage());
+                    historyView.returnHistoryError(response.body().getMessage());
+                }
+                else historyView.returnHistory(response.body());
             }
 
             @Override

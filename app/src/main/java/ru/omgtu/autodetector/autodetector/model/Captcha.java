@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by gritsay on 16.12.17.
  */
 
-public class Capture {
+public class Captcha {
    @SerializedName("cookies")
    private String cookies;
    @SerializedName("captcha")
