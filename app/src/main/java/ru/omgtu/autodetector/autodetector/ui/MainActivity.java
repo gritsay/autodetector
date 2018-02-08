@@ -1,11 +1,17 @@
 package ru.omgtu.autodetector.autodetector.ui;
 
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -32,6 +38,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnCheck = (Button) findViewById(R.id.btnCheck);
         btnCheck.setOnClickListener(this);
 
+        TextWatcher twDoc = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                //Log.d("!!!!", etVin.getText().toString());
+                String documentType = checkWithRegex(etVin.getText().toString());
+                switch (documentType){
+                    case "vin":
+                        btnCheck.setEnabled(true);
+                        break;
+                    default:
+                        btnCheck.setEnabled(false);
+                        break;
+                }
+            }
+        };
+        etVin.addTextChangedListener(twDoc);
+        etVin.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_DOWN &&
+                        (i == KeyEvent.KEYCODE_ENTER)){
+                    btnCheck.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -67,18 +110,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     captcha = data.getStringExtra("captcha");
                     cookies = data.getStringExtra("cookies");
 
-                    Intent intent = new Intent(this, DtpActivity.class);
+                    Intent intent = new Intent(this, HistoryActivity.class);
                     intent.putExtra("vin", etVin.getText().toString());
                     intent.putExtra("captcha", captcha);
                     intent.putExtra("cookies", cookies);
                     startActivityForResult(intent, REQUEST_CODE_CHECK);
                     break;
                 case REQUEST_CODE_CHECK:
-                    /*Intent intent1 = new Intent(this, HistoryActivity.class);
+                    Intent intent1 = new Intent(this, DtpActivity.class);
                     intent1.putExtra("vin", etVin.getText().toString());
                     intent1.putExtra("captcha", captcha);
                     intent1.putExtra("cookies", cookies);
-                    startActivityForResult(intent1, REQUEST_CODE_CHECK);*/
+                    startActivityForResult(intent1, REQUEST_CODE_CHECK);
             }
         }
 
