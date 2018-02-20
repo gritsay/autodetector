@@ -29,4 +29,9 @@ public class Captcha {
     public void setCaptcha(Bitmap captcha) {
         this.captcha = captcha;
     }
+
+    @Override
+    public String toString() {
+        return cookies;
+    }
 }

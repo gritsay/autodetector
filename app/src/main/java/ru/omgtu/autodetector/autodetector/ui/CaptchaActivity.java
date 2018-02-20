@@ -3,6 +3,7 @@ package ru.omgtu.autodetector.autodetector.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,7 @@ public class CaptchaActivity extends AppCompatActivity implements CaptchaView, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_captcha);
-
+        Log.d("!!!!", "captcha");
         ivCaptcha = (ImageView) findViewById(R.id.ivCaptcha);
         btn = (Button) findViewById(R.id.btn);
         btn.setOnClickListener(this);
@@ -38,7 +39,6 @@ public class CaptchaActivity extends AppCompatActivity implements CaptchaView, V
         presenter.checkCapture();
 
     }
-
 
     @Override
     public void returnCaptcha(Captcha captcha) {

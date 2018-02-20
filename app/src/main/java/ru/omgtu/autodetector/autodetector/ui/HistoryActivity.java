@@ -14,6 +14,7 @@ import java.util.Map;
 
 import ru.omgtu.autodetector.autodetector.R;
 import ru.omgtu.autodetector.autodetector.model.History.CarHistory;
+import ru.omgtu.autodetector.autodetector.model.Report;
 import ru.omgtu.autodetector.autodetector.network.gibdd.GibddService;
 import ru.omgtu.autodetector.autodetector.network.gibdd.NetworkGibddBuilder;
 import ru.omgtu.autodetector.autodetector.presenter.HistoryPresenter;
@@ -51,35 +52,47 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView{
             String[] splitResult = entry.split("\\|", 2);
             carType.put(splitResult[0], splitResult[1]);
         }
+
         return carType;
     }
 
     @Override
     public void returnHistory(CarHistory carHistory) {
 
+        Report report = (Report)getIntent().getParcelableExtra("report");
+
         Map<String, String> carType = parseStringArray(R.array.carType);
-        //Log.d("!!!!", carType.get("23"));
-        Map<String, String> basicInfo = new LinkedHashMap<String, String>();
-        basicInfo.put("Марка, модель: ", carHistory.getRequestResult().getVehicle().getModel());
-        basicInfo.put("Год выпуска: ", carHistory.getRequestResult().getVehicle().getYear());
-        basicInfo.put("Категория транспортного средства: ", carHistory.getRequestResult().getVehicle().getCategory());
-        basicInfo.put("Кузов: ", carHistory.getRequestResult().getVehicle().getBodyNumber());
-        basicInfo.put("Цвет: ", carHistory.getRequestResult().getVehicle().getColor());
-        basicInfo.put("Рабочий объем (см3): ", carHistory.getRequestResult().getVehicle().getEngineVolume());
-        basicInfo.put("Мощность: ", carHistory.getRequestResult().getVehicle().getPowerHp() + " л.с. / " +
-                carHistory.getRequestResult().getVehicle().getPowerKwt() + " кВт");
-        basicInfo.put("№ двигателя: ", carHistory.getRequestResult().getVehicle().getBodyNumber());
-        basicInfo.put("Тип: ", carType.get(carHistory.getRequestResult().getVehicle().getType())); // обработка типа
-        basicInfo.put("ПТС: ", carHistory.getRequestResult().getVehiclePassport().getNumber());
-        for (Map.Entry<String, String> entry : basicInfo.entrySet()) {
+        LinkedHashMap<String, String> basicInfo = new LinkedHashMap<String, String>();
+
+        basicInfo.put(getResources().getString(R.string.model), carHistory.getRequestResult().getVehicle().getModel());
+        basicInfo.put(getResources().getString(R.string.year), carHistory.getRequestResult().getVehicle().getYear());
+        basicInfo.put(getResources().getString(R.string.category), carHistory.getRequestResult().getVehicle().getCategory());
+        basicInfo.put(getResources().getString(R.string.bodyNumder), carHistory.getRequestResult().getVehicle().getBodyNumber());
+        basicInfo.put(getResources().getString(R.string.color), carHistory.getRequestResult().getVehicle().getColor());
+        basicInfo.put(getResources().getString(R.string.engVolume), carHistory.getRequestResult().getVehicle().getEngineVolume());
+        basicInfo.put(getResources().getString(R.string.power), carHistory.getRequestResult().getVehicle().getPowerHp() +
+                getResources().getString(R.string.hp) +
+                carHistory.getRequestResult().getVehicle().getPowerKwt() +
+                getResources().getString(R.string.kwt));
+        basicInfo.put(getResources().getString(R.string.bodyNumder), carHistory.getRequestResult().getVehicle().getBodyNumber());
+        basicInfo.put(getResources().getString(R.string.type), carType.get(carHistory.getRequestResult().getVehicle().getType())); // обработка типа
+        basicInfo.put(getResources().getString(R.string.pts), carHistory.getRequestResult().getVehiclePassport().getNumber());
+
+        report.setReport("Базовые сведения", basicInfo);
+
+        /*<String, Map<String, String>> r = report.getReport();
+        //Map.Entry<String, Map<String, String>>
+        Map<String, String> r1 = r.get("Базовые сведения");
+        for (Map.Entry<String, String> entry : r1.entrySet()) {
             Log.d("!!!!", entry.getKey() + entry.getValue());
             
-        }
+        }*/
 
         Map<String, String> historyInfo = new LinkedHashMap<String, String>();
-
-
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        intent.putExtra("report", report);
+        intent.putExtra("next", "dtp");
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -89,4 +102,6 @@ public class HistoryActivity extends AppCompatActivity implements HistoryView{
         setResult(RESULT_CANCELED);
         finish();
     }
+
+
 }
